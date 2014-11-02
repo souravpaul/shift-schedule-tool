@@ -33,13 +33,13 @@ class Team extends Model {
     }
 
     public function view($team_id) {
-        $sql = 'SELECT * FROM TEAM WHERE TEAM_ID="' . $team_id . '"';
+        $sql = 'SELECT * FROM TEAM WHERE TEAM_ID="' . $team_id . '" AND ACTIVE=1';
         $result = $this->fetch($sql);
         return $result;
     }
 
     public function update($team){
-	$sql='UPDATE TEAM SET NAME="'.$team['NAME'].'" WHERE TEAM_ID="'.$team['TEAM_ID'].'"';
+	$sql='UPDATE TEAM SET NAME="'.$team['NAME'].'" WHERE TEAM_ID="'.$team['TEAM_ID'].'" AND ACTIVE=1';
 	$result=$this->query($sql);	
 	return $result;
     }
@@ -48,7 +48,9 @@ class Team extends Model {
         $sql="UPDATE TEAM SET ACTIVE='0' WHERE TEAM_ID='$team_id'";
 	$result=$this->query($sql);	
         $account=new Account;
-        $account=removeByAdmin('TEAM_ADMIN',$team_id);
+        $account->removeByAdmin('TEAM_ADMIN',$team_id);
+        $member=new Member;
+        $member->removeByTeam($team_id);
 	return $result;
     }
 

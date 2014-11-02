@@ -128,6 +128,12 @@ class TeamsController extends Controller {
             redirect('account/login');
         }
         
+        if($_SESSION['ADMIN_TYPE']!='PROJECT_ADMIN' && $_SESSION['ADMIN_TYPE']!='APP_ADMIN'){
+            $this->_template->status('You do not have permission to Create/Remove any Teams.', 0, ERROR);
+            redirect('teams/viewall');  
+            return;
+        }
+        
         if (!isset($_POST) || empty($_POST)) {
             $this->_template->status('Invalid form submission.', 0, ERROR);
             return;
