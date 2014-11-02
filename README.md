@@ -1,5 +1,5 @@
-Shift Schedule Tool
-===================
+Shift Schedule Tool (Alpha- 0.050)
+=================================
 
 This is a shift management tool.You can use it for any organization or project and customize it for your environment.
 This project is under development phase.Expected date to complete is 15th Nov,2014.
