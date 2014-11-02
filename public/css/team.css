@@ -1,0 +1,79 @@
+.filter_box{
+	border:solid 1px red;
+	background:black;
+	display:block;
+	height:250px;
+}
+
+.shift_structure{
+	overflow-x:hidden;	
+}
+.shift_structure tr td:first-child {
+	min-width:65px;
+	padding:6px 4px;
+	border:solid 1px  blue;
+	position:fixed;
+	background:gray;
+	z-index:5;
+}
+.shift_structure tr td:nth-child(2) {
+	width:65px;
+	min-width:65px;
+}
+.shift_structure tr td{
+	min-width:200px;
+	padding:6px 4px;
+	border:solid 1px  blue;
+}
+.team_form tr td{
+    padding:8px 3px;
+}
+.team_form tr td:first-child{
+    width:120px;
+    font-size:13px;
+}
+.team_form tr td:nth-child(2){
+    width:350px;
+    text-align:left;
+}
+
+.team_form tr td input{
+    width:90%;
+}
+
+.team_list{
+    width:99%;
+    font-weight:15px;
+    border:solid 1px #B2B2B2;
+    border-bottom: 0px;
+    background:white;
+}
+
+.team_list tr th{
+    font-weight:bold;
+    color:white;
+    font-size:15px;
+    background:#4390DF ;
+    padding:10px 13px;
+    border-bottom: solid 1px white;
+    border-right: solid 1px white;
+}
+.team_list tr th:last-child{
+    border-right: 0px;
+}
+.team_list tr td{
+    padding:7px 13px;
+    border-bottom: solid 1px #B2B2B2;
+    border-right: solid 1px #B2B2B2;
+    font-size:15px;
+    
+}
+.team_list tr td:last-child{
+    border-right: 0px;
+}
+.team_list tr:nth-child(2n+1){
+    background:#D9E9F9;
+}
+.team_form select{
+    width: 90%;
+}
