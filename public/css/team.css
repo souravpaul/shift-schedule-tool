@@ -31,11 +31,13 @@
 .team_form tr td:first-child{
     width:120px;
     font-size:13px;
+    font-weight:bold;
 }
 .team_form tr td:nth-child(2){
     width:350px;
     text-align:left;
 }
+
 
 .team_form tr td input{
     width:90%;
