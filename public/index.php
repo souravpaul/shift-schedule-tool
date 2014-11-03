@@ -5,7 +5,7 @@ define('ROOT', dirname(dirname(__FILE__)));
 if (isset($_GET['url']) && !empty($_GET['url']))
     $url = $_GET['url'];
 else
-    $url = '';
+    $url = 'account/login';
 #echo ROOT;
 require_once (ROOT . DS . 'lib' . DS . 'bootstrap.php');
 ?>

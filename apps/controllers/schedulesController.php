@@ -122,9 +122,17 @@ class SchedulesController extends Controller {
             $this->_template->status('Please choose date(s) to create schedule.', 0, WARNING);
             redirect('schedules/calender');
         }
+        
         $team_id = $_SESSION['TEAM_ID'];
 
         $dates = $_SESSION['date_save'];
+        
+        foreach($dates as $date){
+            if(strtotime($date) <strtotime(date('d-m-Y'))){
+                $this->_template->status('You cannot updated old days schedule.', 0, ERROR);
+                redirect('schedules/view/'.$team_id);                
+            }
+        }
 
         $weekday_dates = array();
         $weekend_dates = array();

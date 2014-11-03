@@ -16,7 +16,7 @@ $html->includeJS('member');
             <ul class="member_list">
                 <?php
                 foreach ($member_list as $member) {
-                    echo "<li data-member=" . htmlspecialchars(json_encode($member), ENT_QUOTES) . ">" . $member['FIRST_NAME'] . ' ' . $member['LAST_NAME'] . '</li>';
+                    echo "<li data-member=\"" . htmlspecialchars(json_encode($member), ENT_QUOTES) . "\">" . $member['FIRST_NAME'] . ' ' . $member['LAST_NAME'] . '</li>';
                 }
                 ?>
             </ul>
@@ -27,7 +27,7 @@ $html->includeJS('member');
                 <img src="<?php echo WEBROOT; ?>public/img/avatar.jpg"/>
                 <div style="display:inline-block;vertical-align:top;">
                     <h3 id="vname">Sourav Paul</h3>
-                    <b id="vteam">Unknown Team</b><br/><br/>
+                    <b id="vteam">Unknown Team</b><b> Team</b><br/><br/>
                     <b id="vloc"></b>
                     <b style="color:blue;" id="vloc_type"></b>
                 </div>

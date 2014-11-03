@@ -11,6 +11,11 @@ class AccountController extends Controller {
     }
 
     function login() {
+        
+        if($this->authenticated){
+            redirect("account/home");
+        }
+        
         if (!isset($_GET['attempt']) || empty($_GET['attempt'])) {
             return;
         }
@@ -50,6 +55,7 @@ class AccountController extends Controller {
         if (!$this->authenticated) {
             redirect('account/login');
         }
+        redirect("schedules/calender");
     }
 
     function isExixts($user_name) {

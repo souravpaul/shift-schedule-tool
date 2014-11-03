@@ -129,6 +129,7 @@ var calender = {
                                         + '-' + (d.getMonth() + 1) + '-'
                                         + d.getFullYear()) {
                                     $(this).css('background', '#80CC80');
+                                    $(this).addClass('fc-today');
                                 }
                                 count++;
                             } else {
@@ -224,7 +225,7 @@ $(document).ready(
             $('#clear-selection').click(
                     function () {
                         $('.fc-day').find('input').val('');
-                        $('.fc-day').css('background', '#fff');
+                        $('.fc-day').not('.fc-today').css('background', '#fff');
                     });
 
         });

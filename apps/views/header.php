@@ -12,12 +12,11 @@ if (!isset($loggedin)) {
             <div id="linkList2">
                 <div id="lselect">
                     <ul>
-                        <li><a href="<?php echo WEBROOT ?>account/login">Login</a></li>
                         <li><a href="<?php echo WEBROOT ?>members/viewall">Members</a></li>
                         <li><a href="<?php echo WEBROOT ?>shifts/view/">Shift Structure</a></li>
                         <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
                         <li><a href="<?php echo WEBROOT ?>schedules/calender">Schedule</a></li>
-                        <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
+                        <li><a href="<?php echo WEBROOT ?>account/login">Login</a></li>
                     </ul>
                 </div>
 
@@ -32,7 +31,7 @@ if (!isset($loggedin)) {
                 <p class="small-logo">Shift Schedule</p>
                 <br />
                 <p class="login_name">
-                    Hi, <b><?php echo $_SESSION['USER_NAME']; ?></b>
+                    Hi, <b><?php echo ucwords($_SESSION['USER_NAME']); ?></b>
                 </p>
                 <div id="linkList2">
                     <div id="lselect">

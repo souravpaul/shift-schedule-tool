@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><br/><input type="submit" value="Login" class="button" style="width:90%;"/></td>
+                    <td><br/><input type="submit" value="Login" style="float: none;margin-left:5px;width:50%;" class="button"/></td>
                 </tr>
             </table>
 

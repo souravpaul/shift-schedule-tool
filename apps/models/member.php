@@ -22,8 +22,8 @@ class Member extends Model {
         //$result = $this->fetch("SELECT * FROM MEMBER");
         $result = $this->fetch("SELECT * FROM (
 				(SELECT * FROM MEMBER WHERE ACTIVE=1) A
-				LEFT JOIN
-				(SELECT TEAM_ID AS T_ID,NAME AS TEAM_NAME FROM TEAM) B
+				INNER JOIN
+				(SELECT TEAM_ID AS T_ID,NAME AS TEAM_NAME FROM TEAM WHERE ACTIVE=1) B
 				ON A.TEAM_ID=B.T_ID)");
         return $result;
     }

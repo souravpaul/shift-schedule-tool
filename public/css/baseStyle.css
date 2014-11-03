@@ -91,8 +91,8 @@ h3 {
 	width: 208px;
 	text-align: right;
 	float: none;
-	background: #34495E;
-	border-right: inset 3px #121920;
+	background: #394264;
+	border-right: solid 1px #1F253D;
 }
 
 #linkList h3 {
@@ -101,8 +101,8 @@ h3 {
 }
 
 #lselect,#lfavorites,#larchives,#lresources {
-	padding: 20px 0 0 0;
-	margin: 0 0 40px 0;
+	/*padding: 20px 0 0 0;
+	margin: 0 0 40px 0;*/
 }
 
 #lselect {
@@ -124,19 +124,19 @@ h3 {
 	display: block;
 	margin: 0;
 	padding: 0;
-	border-bottom: 1px solid #F9F7F6;
+	border-bottom: 1px solid #1F253D;
 }
 
 #linkList li a {
 	display: block;
-	padding: 4px 10px 4px 5px;
-	margin: 0 0 5px 0;
+	padding: 10px 10px 10px 10px;
 	border: 0;
 	text-transform: uppercase;
 	font-weight: bold;
 	text-decoration: none;
 	color: #FFFFFF;
 	font-size: 11px;
+        line-height: 15px;
 }
 
 #lselect li a,#lfavorites li a {
@@ -148,9 +148,10 @@ h3 {
 }
 
 #linkList li a:hover,#linkList li a:focus,#linkList li a:active {
-	padding-right: 6px;
+	/*padding-right: 6px;
 	color: #CCCCCC;
-	text-decoration: none;
+	text-decoration: none;*/
+        background:#50597B;
 }
 
 #linkList li a.c {
@@ -210,8 +211,10 @@ body {
 	left: 208px;
 	right: 0px;
 	height: 37px;
-	background-color: #34495E;
-	border-bottom: inset 3px #121920;
+	/*background-color: #34495E;
+	border-bottom: inset 3px #121920;*/
+	background: #394264;
+	border-bottom: solid 2px #1F253D;
 	z-index: 50;
 }
 
@@ -231,8 +234,12 @@ body {
 .login_name {
 	color: #FF9900;
 	text-align: center;
-	font-size: 17px;
-	margin-bottom: 15px;
+	font-size: 15px;
+	/*margin-bottom: 15px;*/
+        background:#11A8AB;
+        padding:18px;
+        color:white;
+        margin:0px;
 }
 
 #container .body-hold {

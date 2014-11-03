@@ -111,7 +111,7 @@ class MembersController extends Controller{
 
         if (!$this->_validate->isNotBlank($member["pj_role"])) {
             //Bypass
-        } else if (!$this->_validate->isAlphaNumeric($member["pj_role"])) {
+        } else if (!$this->_validate->isAlphaNumeric($member["pj_role"],' ')) {
             array_push($error, array(
                 'target_block' => 6,
                 'code' => ERROR,
@@ -156,7 +156,7 @@ class MembersController extends Controller{
 
         if (!$this->_validate->isNotBlank($member["cmp_role"])) {
             //Bypass
-        } else if (!$this->_validate->isAlphaNumeric($member["cmp_role"])) {
+        } else if (!$this->_validate->isAlphaNumeric($member["cmp_role"],' ')) {
             array_push($error, array(
                 'target_block' => 9,
                 'code' => ERROR,
