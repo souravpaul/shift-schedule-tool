@@ -28,7 +28,7 @@ class ShiftsController extends Controller{
             return;
         }
         
-        $shift = filter_input_array(INPUT_POST);
+        $shift = $this->getRequest(INPUT_POST);
         $error = array();
         if (!$this->_validate->isNotBlank($shift["start_time"])) {
             array_push($error, array(

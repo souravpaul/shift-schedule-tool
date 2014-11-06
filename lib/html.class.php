@@ -4,6 +4,7 @@ class HTML{
     public $endScript="";
     public $headConf="";
     public $title="";
+    public $headLink="";
     
     function includeJS($fileName,$baseScript=true){
         $data = '<script src="'.WEBROOT.'js/'.$fileName.'.js" type="text/javascript"></script>';
@@ -28,15 +29,10 @@ class HTML{
     
     function setTitle($title){
         $this->title=$title;
-    }
+    }    
     
-    public function link($name,$url,$keyframe=true){
-        if ($keyframe) {
-            $data = '<a href="' . WEB_BASE . '/keyframe/' . $url . '" >' . $name . '</a>';
-        } else {
-            $data = '<a href="' . WEB_BASE . '/' . $url . '" >' . $name . '</a>';
-        }
-        echo $data;        
+    function setHeadLink($name,$link){
+        $this->headLink.="<li><a href='".WEBROOT."$link'>$name</a></li>";
     }
     
 }
