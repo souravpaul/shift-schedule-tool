@@ -8,13 +8,15 @@
     position:relative;
 
     background-color: #dfdddd;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f5f5),
-        to(#dfdddd));
-    background-image: -webkit-linear-gradient(top, #f4f5f5, #dfdddd);
-    background-image: -moz-linear-gradient(top, #f4f5f5, #dfdddd);
-    background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
-    background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
-    background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);
+    /*  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f5f5),
+          to(#dfdddd));
+      background-image: -webkit-linear-gradient(top, #f4f5f5, #dfdddd);
+      background-image: -moz-linear-gradient(top, #f4f5f5, #dfdddd);
+      background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
+      background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
+      background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);*/
+    color: white;
+    background: #4390DF;
     border-bottom:solid 1px gray;
 
 }
@@ -228,13 +230,14 @@
     margin:8px;
 }
 .bio_table td{
-    padding:13px 5px;
+    padding:12px 5px;
     border-bottom:solid 1px gray;
-    font-size:12px;
+    font-size:14px;
 }
 .bio_table tr td:first-child{
     font-weight:bold;
     width:150px;
+    font-size:12px;
 }
 .add_form{
     width:100%;

@@ -3,6 +3,7 @@ $html->includeCss('calender');
 $html->includeJS('schedule');
 $html->includeJS('calender');
 $html->setTitle('Daily Calender');
+$html->setHeadLink("Calender","schedules/calender");
 ?>
 <div id="calendar" class="fc fc-ltr fc-unthemed sf-calendar"
      style="width: 90%;">
@@ -57,7 +58,7 @@ $html->setTitle('Daily Calender');
         </div>
         <div class="fc-clear"></div>
     </div>
-    <form name="calender_datepick" id="calender_datepick" method="post" action="<?php echo WEBROOT; ?>schedules/view/<?php echo $_SESSION['TEAM_ID'] ?>">
+    <form name="calender_datepick" id="calender_datepick" method="post" action="<?php echo WEBROOT; ?>schedules/view/<?php echo (isset($_SESSION['TEAM_ID']))?$_SESSION['TEAM_ID']:$team_list[0]['TEAM_ID'] ?>">
         <div class="fc-view-container" style="display:none;">
             <div class="fc-view fc-month-view fc-basic-view">
                 <table>

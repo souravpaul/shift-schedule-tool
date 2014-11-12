@@ -2,12 +2,12 @@
 $html->includeCss('member');
 $html->setTitle("Member List");
 $html->includeJS('member');
+$html->setHeadLink("Add New Member","members/add");
 ?>
 
 
 <div class="box_container">
     <div class="box_header">
-        <a href="<?php echo WEBROOT ?>members/add" class="button">Add New Member</a>
         <h3>All Team Members</h3>
     </div>
     <div class="box_body">
@@ -39,7 +39,7 @@ $html->includeJS('member');
                 </tr>
                 <tr>
                     <td><?php echo PROJECT; ?> Email</td>
-                    <td id="vpj_email"></td>
+                    <td ><a href="#" id="vpj_email"></a></td>
                 </tr>
                 <tr>
                     <td><?php echo PROJECT; ?> Role</td>
@@ -47,19 +47,19 @@ $html->includeJS('member');
                 </tr>
                 <tr>
                     <td>Contact No 1</td>
-                    <td id="vcontact_1">9874788063</td>
+                    <td id="vcontact_1"></td>
                 </tr>
                 <tr>
                     <td>Contact No 2</td>
-                    <td id="vcontact_2">123456987</td>
+                    <td id="vcontact_2"></td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Employee Id</td>
-                    <td id="vcmp_id">739947</td>
+                    <td id="vcmp_id">######</td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Email</td>
-                    <td id="vcmp_email"></td>
+                    <td ><a href="#" id="vcmp_email"></a></td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Role</td>
@@ -74,7 +74,7 @@ $html->includeJS('member');
     <?php
     foreach ($team_list as $team) {
         echo "<li data-member=" . htmlspecialchars(json_encode($team), ENT_QUOTES) . ">"
-                . "<a href='".WEBROOT."members/view/".$team['TEAM_ID']."'>" . $team['NAME'] . '</a>'
+                . "<a href='".WEBROOT."members/view/".$team['TEAM_ID']."' title='".$team['FULL_NAME']."' >" . $team['SHORT_NAME'] . '</a>'
                 . '</li>';
     }
     ?>

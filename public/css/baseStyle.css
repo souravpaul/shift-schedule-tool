@@ -251,13 +251,47 @@ body {
 	min-height: 183px;
 	border-radius: 4px;
 	text-align: left;
-	padding: 7px 18px;
+	padding: 25px 18px 7px;
 	position: relative;
 }
 
-.topbar h2 {
-	padding: 3px;
-	margin: 8px;
-	color: #FFC266;
-	font-size: 15px;
+.topbar .title {
+	padding: 9px;
+        padding-left: 20px;
+	color: white;
+        margin:0px;
+        display:inline-block;       
+	font-size: 16px;
+        background:#50597B;
+        width:40%;
+        border-left: solid 1px #1F253D;
+        border-right: solid 1px #1F253D;
+       float:left;
+}
+
+
+.topbar  .menu{
+    float:left;
+    width: 40%;
+    margin:0px;
+    display: inline-block;
+}
+.topbar  .menu li{
+    display: inline-block;
+    margin:0px;
+    margin-left: 1px;
+    float:left;
+}
+.topbar  .menu li a{
+    display:block;
+    padding:10px 12px;
+    color:white;
+    font-weight:bold;   
+    font-size: 15px;
+    border-right: solid 1px #1F253D;
+    
+}
+
+.topbar  .menu li a:hover{
+    background:#50597B;
 }

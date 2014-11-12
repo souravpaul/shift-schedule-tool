@@ -2,6 +2,8 @@
 $html->includeCss('calender');
 $html->includeJS('schedule');
 $html->setTitle('Create Schedule');
+$html->setHeadLink("Calender","schedules/calender");
+$html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
 ?>
 
 <div id="calendar" class="fc fc-ltr fc-unthemed">
@@ -20,8 +22,6 @@ $html->setTitle('Create Schedule');
                         <span class="fc-icon fc-icon-right-single-arrow"></span>
                 </button> -->
             </div>
-            <a href="<?php echo WEBROOT; ?>schedules/view/<?php echo $_SESSION['TEAM_ID'] ?>"
-               class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right ">Back</a>
             <a href="<?php echo WEBROOT; ?>schedules/add"
                class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right "
                onclick="$('#schedule_create_form').submit();
@@ -38,7 +38,7 @@ $html->setTitle('Create Schedule');
             </div>
         </div>
         <div class="fc-center">
-            <h2>Create <?php // echo ' '.$current_team_name.' Team'; ?>Schedule</h2>
+            <h2>Create <?php  echo ' '.((isset($current_team_name))?$current_team_name:'').' Team'; ?>Schedule</h2>
         </div>
         <div class="fc-clear"></div>
     </div>

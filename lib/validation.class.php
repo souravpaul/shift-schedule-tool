@@ -42,6 +42,7 @@ class Validation {
     function isAlpha($value, $extra_char = "") {
         $exp = "/[^a-zA-Z" . $extra_char . "]/";
         if (preg_match($exp, $value)) {
+            echo ">$value<";
             return false;
         }
         return true;

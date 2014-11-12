@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2014 at 05:09 PM
+-- Generation Time: Nov 06, 2014 at 07:24 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -31,10 +31,31 @@ CREATE TABLE IF NOT EXISTS `ACCOUNT` (
   `USERNAME` varchar(50) NOT NULL,
   `PASSWORD` text NOT NULL,
   `ADMIN_TYPE` varchar(25) NOT NULL DEFAULT '0',
+  `USER_EMAIL` varchar(75) NOT NULL,
   `TEAM_ID` int(11) DEFAULT NULL,
   `ACTIVE` int(1) NOT NULL DEFAULT '1',
+  `PASSWORD_TYPE` varchar(15) NOT NULL DEFAULT 'PART_TIME',
+  `MEMBER_ID` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`USER_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `EMAIL_LOG`
+--
+
+CREATE TABLE IF NOT EXISTS `EMAIL_LOG` (
+  `ID` int(20) NOT NULL AUTO_INCREMENT,
+  `SENDER` text NOT NULL,
+  `SENDER_NAME` varchar(100) NOT NULL DEFAULT 'Shift Schedule Admin',
+  `RECEIVER` text NOT NULL,
+  `SUBJECT` text NOT NULL,
+  `BODY` text NOT NULL,
+  `SEND_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MAIL_STATUS` varchar(20) NOT NULL DEFAULT 'PENDING',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `MEMBER` (
   `LOCATION_TYPE` varchar(20) NOT NULL,
   `ACTIVE` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`MEM_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -76,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `SCHEDULE` (
   `TEAM_ID` int(11) NOT NULL,
   `RANK` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`SCH_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -93,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `SHIFT_STRUCTURE` (
   `TEAM_ID` int(5) NOT NULL,
   `ACTIVE` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`STRUCT_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -103,11 +124,13 @@ CREATE TABLE IF NOT EXISTS `SHIFT_STRUCTURE` (
 
 CREATE TABLE IF NOT EXISTS `TEAM` (
   `TEAM_ID` int(5) NOT NULL AUTO_INCREMENT,
-  `NAME` varchar(25) NOT NULL,
-  `ADMIN_ID` int(10) NOT NULL,
+  `FULL_NAME` varchar(25) NOT NULL,
+  `SHORT_NAME` varchar(15) NOT NULL,
+  `EMAIL` varchar(75) NOT NULL,
   `ACTIVE` int(11) NOT NULL DEFAULT '1',
+  `EMAIL_REF` int(11) DEFAULT '0',
   PRIMARY KEY (`TEAM_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

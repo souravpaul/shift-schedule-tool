@@ -99,7 +99,7 @@ class SchedulesController extends Controller {
 
         foreach ($team_list as $team) {
             if ($team['TEAM_ID'] == $team_id) {
-                $this->_template->set('current_team_name', $team['NAME']);
+                $this->_template->set('current_team_name', $team['FULL_NAME']);
                 break;
             }
         }
@@ -109,6 +109,14 @@ class SchedulesController extends Controller {
 
     function calender() {
         unset($_SESSION['date_save']);
+         /*         * ********** Create Team List ************** */
+        $team = new Team;
+        $team_list = $team->viewall();
+        if ($team_list !== false) {
+            $this->_template->set('team_list', $team_list);
+        } else {
+            $this->_template->status('Sorry,failed to load Team.', 0, WARNING);
+        }
     }
 
     function create() {
@@ -165,6 +173,12 @@ class SchedulesController extends Controller {
             $this->_template->set('shift_list', $shift_list);
         } else {
             $this->_template->status('Sorry,failed to load Team.', 0, WARNING);
+        }
+        
+        $team_model=new Team;
+        $team_result=$team_model->view($team_id);
+        if($team_result!==false && !empty($team_result)){
+            $this->_template->set('current_team_name',$team_result[0]['FULL_NAME']);
         }
 
         /*         * ***** Schedule List ****** */
