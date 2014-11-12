@@ -12,70 +12,66 @@ function setReporting() {
         ini_set('error_log', ROOT . DS . 'tmp' . DS . 'logs' . DS . 'error.log');
     }
 }
-
 date_default_timezone_set("Asia/Calcutta");
-if (!isset($_SESSION)) {
+if(!isset($_SESSION)){
     session_start();
 }
 
 /** Check for Magic Quotes and remove them * */
 function stripSlashesDeep($value) {
-    $value = is_array($value) ? array_map('cleanInputs', $value) : stripslashes($value);
+    $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
     return $value;
 }
 
 function removeMagicQuotes() {
-    //if (get_magic_quotes_gpc()) 
-    {
-       /* $_GET = cleanInputs($_GET);
-        $_POST = cleanInputs($_POST);
-        $_COOKIE = cleanInputs($_COOKIE);*/
+    if (get_magic_quotes_gpc()) {
+        $_GET = stripSlashesDeep($_GET);
+        $_POST = stripSlashesDeep($_POST);
+        $_COOKIE = stripSlashesDeep($_COOKIE);
     }
 }
+/** Get Required Files **/
 
-
-
-
-/** Get Required Files * */
 gzipOutput() || ob_start("ob_gzhandler");
+/** GZip Output **/
 
-/** GZip Output * */
 function gzipOutput() {
-    $ua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+    $ua = filter_input(INPUT_SERVER,'HTTP_USER_AGENT');
 
-    if (0 !== strpos($ua, 'Mozilla/4.0 (compatible; MSIE ') || false !== strpos($ua, 'Opera')) {
+    if (0 !== strpos($ua, 'Mozilla/4.0 (compatible; MSIE ')
+        || false !== strpos($ua, 'Opera')) {
         return false;
     }
 
-    $version = (float) substr($ua, 30);
+    $version = (float)substr($ua, 30); 
     return (
-            $version < 6 || ($version == 6 && false === strpos($ua, 'SV1'))
-            );
+        $version < 6
+        || ($version == 6  && false === strpos($ua, 'SV1'))
+    );
 }
 
-/* * **** Redirect Action ****** */
-$_REDIRECT['LINK'] = "";
-$_REDIRECT['HOLD_MESSSAGE'] = "";
-
-function redirect($url, $hold_message = "") {
+/****** Redirect Action *******/
+$_REDIRECT['LINK']="";
+$_REDIRECT['HOLD_MESSSAGE']="";
+function redirect($url,$hold_message="") {
     global $_REDIRECT;
-    $_REDIRECT['LINK'] = $url;
-    $_REDIRECT['HOLD_MESSSAGE'] = $hold_message;
-    die();
+    $_REDIRECT['LINK']=$url;
+    $_REDIRECT['HOLD_MESSSAGE']=$hold_message;
+	die();
 }
 
 /** Check register globals and remove them * */
 function unregisterGlobals() {
-    /*  if (ini_get('register_globals')) {
-      $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
-      foreach ($array as $value) {
-      foreach ($GLOBALS[$value] as $key => $var) {
-      if ($var === $GLOBALS[$key]) {
-      unset($GLOBALS[$key]);
-      }
-      }
-      }
-      } */
+  /*  if (ini_get('register_globals')) {
+        $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+        foreach ($array as $value) {
+            foreach ($GLOBALS[$value] as $key => $var) {
+                if ($var === $GLOBALS[$key]) {
+                    unset($GLOBALS[$key]);
+                }
+            }
+        }
+    }*/
 }
 
 /** Main Call Function * */
@@ -116,6 +112,8 @@ function __autoload($className) {
         /* Error Generation Code Here */
     }
 }
+
+
 
 setReporting();
 removeMagicQuotes();

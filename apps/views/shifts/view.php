@@ -1,8 +1,10 @@
 <?php
 $html->includeCss('team');
 $html->setTitle('Shift List');
-$html->setHeadLink("Add New Structure","shifts/add");
 ?>
+<div style="height:50px;width:99%;">
+    <a href="<?php echo WEBROOT; ?>shifts/add" class="checkout-btn" style="width:150px;float:right;">Add New Structure</a><br/>
+</div>
 
 <table class="team_list" cellspacing="0">
     <tr>

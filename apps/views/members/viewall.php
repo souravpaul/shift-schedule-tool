@@ -2,12 +2,12 @@
 $html->includeCss('member');
 $html->setTitle("Member List");
 $html->includeJS('member');
-$html->setHeadLink("Add New Member","members/add");
 ?>
 
 
 <div class="box_container">
     <div class="box_header">
+        <a href="<?php echo WEBROOT ?>members/add" class="button">Add New Member</a>
         <h3>All Team Members</h3>
     </div>
     <div class="box_body">
@@ -39,7 +39,7 @@ $html->setHeadLink("Add New Member","members/add");
                 </tr>
                 <tr>
                     <td><?php echo PROJECT; ?> Email</td>
-                    <td ><a href="#" id="vpj_email"></a></td>
+                    <td id="vpj_email"></td>
                 </tr>
                 <tr>
                     <td><?php echo PROJECT; ?> Role</td>
@@ -47,19 +47,19 @@ $html->setHeadLink("Add New Member","members/add");
                 </tr>
                 <tr>
                     <td>Contact No 1</td>
-                    <td id="vcontact_1"></td>
+                    <td id="vcontact_1">9874788063</td>
                 </tr>
                 <tr>
                     <td>Contact No 2</td>
-                    <td id="vcontact_2"></td>
+                    <td id="vcontact_2">123456987</td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Employee Id</td>
-                    <td id="vcmp_id">######</td>
+                    <td id="vcmp_id">739947</td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Email</td>
-                    <td ><a href="#" id="vcmp_email"></a></td>
+                    <td id="vcmp_email"></td>
                 </tr>
                 <tr>
                     <td><?php echo COMPANY; ?> Role</td>
@@ -74,7 +74,7 @@ $html->setHeadLink("Add New Member","members/add");
     <?php
     foreach ($team_list as $team) {
         echo "<li data-member=" . htmlspecialchars(json_encode($team), ENT_QUOTES) . ">"
-                . "<a href='".WEBROOT."members/view/".$team['TEAM_ID']."' title='".$team['FULL_NAME']."' >" . $team['SHORT_NAME'] . '</a>'
+                . "<a href='".WEBROOT."members/view/".$team['TEAM_ID']."'>" . $team['NAME'] . '</a>'
                 . '</li>';
     }
     ?>

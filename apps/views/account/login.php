@@ -17,10 +17,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><br/>
-                        <input type="submit" value="Login" style="float: none;margin-left:5px;width:50%;" class="button"/>
-                        <a href="<?php echo WEBROOT ?>account/forget_password" style="font-size:13px;font-weight:bold;">Forget Password?</a>
-                    </td>
+                    <td><br/><input type="submit" value="Login" style="float: none;margin-left:5px;width:50%;" class="button"/></td>
                 </tr>
             </table>
 

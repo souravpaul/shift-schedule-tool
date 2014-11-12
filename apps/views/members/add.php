@@ -1,12 +1,12 @@
 <?php
 $html->includeCss('member');
 $html->setTitle('Add New Member');
-$html->setHeadLink("Member List","members/viewall");
 ?>
 
 
 <div class="box_container">
     <div class="box_header">
+        <a href="<?php echo WEBROOT ?>members/viewall" class="button">Member List</a>
         <h3>Add New Member</h3>
     </div>
     <div class="box_body">
@@ -28,7 +28,7 @@ $html->setHeadLink("Member List","members/viewall");
                     <td><span class="error_tooltip"></span></td>
                 </tr>
                 <tr>
-                    <td><?php echo PROJECT ?> ID</td>
+                    <td><?php echo PROJECT ?> ID<font color="red">*</font></td>
                     <td><input class="base-input"  type="text" name="pj_id" value="<?php echo (isset($_OLD_STATE)) ? $_OLD_STATE['pj_id'] : ''; ?>"/></td>
                     <td><span class="error_tooltip"></span></td>
                 </tr>

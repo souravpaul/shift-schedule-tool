@@ -13,6 +13,7 @@ if (!isset($loggedin)) {
                 <div id="lselect">
                     <ul>
                         <li><a href="<?php echo WEBROOT ?>members/viewall">Members</a></li>
+                        <li><a href="<?php echo WEBROOT ?>shifts/view/">Shift Structure</a></li>
                         <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
                         <li><a href="<?php echo WEBROOT ?>schedules/calender">Schedule</a></li>
                         <li><a href="<?php echo WEBROOT ?>account/login">Login</a></li>
@@ -35,17 +36,10 @@ if (!isset($loggedin)) {
                 <div id="linkList2">
                     <div id="lselect">
                         <ul>
-                            <?php
-                                if($_SESSION['ADMIN_TYPE']=="TEAM_MEMBER" || $_SESSION['ADMIN_TYPE']=="PROJECT_ADMIN"){
-                            ?>
-                            <li><a href="<?php echo WEBROOT ?>members/edit/<?php echo $_SESSION['MEMBER_ID'] ?>">Edit Profile</a></li>
-                            <?php
-                                }
-                            ?>
                             <li><a href="<?php echo WEBROOT ?>account/home">Home</a></li>
                             <li><a href="<?php echo WEBROOT ?>members/viewall">Members</a></li>
                             <li><a href="<?php echo WEBROOT ?>shifts/view/<?php echo $_SESSION['TEAM_ID']; ?>">Shift Structure</a></li>
-                            <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
+                        <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
                             <li><a href="<?php echo WEBROOT ?>schedules/calender">Schedule</a></li>
                             <li><a href="<?php echo WEBROOT ?>account/logout">Logout</a></li>
                         </ul>
@@ -57,10 +51,6 @@ if (!isset($loggedin)) {
         }
         ?>
         <div class='topbar' >
-            <h2 class="title"><?php echo $html->title; ?></h2>
-            <ul class="menu">
-                <?php echo $html->headLink; ?>
-            </ul>
         </div>
 
         <div class="body-hold">

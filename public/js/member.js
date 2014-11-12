@@ -10,15 +10,11 @@ $(document).ready(function(){
         $('.member_bio #vcmp_id').text( obj['CMP_ID']);
         $('.member_bio #vcmp_email').text( obj['CMP_EMAIL']);
         $('.member_bio #vcmp_role').text( obj['CMP_ROLE']);
-        $('.member_bio #vpj_id').text( (obj['PJ_ID']+"").toUpperCase());
+        $('.member_bio #vpj_id').text( obj['PJ_ID']);
         $('.member_bio #vpj_email').text( obj['PJ_EMAIL']);
         $('.member_bio #vpj_role').text( obj['PJ_ROLE']);
         $('.member_bio #vcontact_1').text( obj['CONTACT_1']);
         $('.member_bio #vcontact_2').text( obj['CONTACT_2']);
-        
-        $('.member_bio #vpj_email').attr( 'href',('mailto:'+obj['PJ_EMAIL']));
-        $('.member_bio #vcmp_email').attr( 'href',('mailto:'+obj['CMP_EMAIL']));
-        
         $('.member_bio').css('display','block');
       
     });

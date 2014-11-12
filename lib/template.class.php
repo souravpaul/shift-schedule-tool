@@ -51,10 +51,18 @@ class Template {
             unset($_SESSION['_STATUS']);
         }
         
-        $html = new HTML();
-        extract($this->variables);
+        if (isset($_POST) && !empty($_POST)) {
+            $this->set('_OLD_STATE', $_POST);
+        }
 
         ob_start();
+        $html = new HTML();
+        extract($this->variables);
+        if (file_exists(ROOT . DS . 'apps' . DS . 'views' . DS . $this->_controller . DS . 'header.php')) {
+            include (ROOT . DS . 'apps' . DS . 'views' . DS . $this->_controller . DS . 'header.php');
+        } else {
+            include (ROOT . DS . 'apps' . DS . 'views' . DS . 'header.php');
+        }
 
         include (ROOT . DS . 'apps' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
 
@@ -66,17 +74,6 @@ class Template {
 
         $body = ob_get_contents();
         ob_end_clean();
-        
-        ob_start();
-        if (file_exists(ROOT . DS . 'apps' . DS . 'views' . DS . $this->_controller . DS . 'header.php')) {
-            include (ROOT . DS . 'apps' . DS . 'views' . DS . $this->_controller . DS . 'header.php');
-        } else {
-            include (ROOT . DS . 'apps' . DS . 'views' . DS . 'header.php');
-        }
-
-        $head = ob_get_contents();
-        ob_end_clean();
-        
         echo '
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
             <html>
@@ -91,7 +88,7 @@ class Template {
                     ' . $html->headConf . '
                 </head>
                 <body>
-                    ' . $head.$body . $html->endScript . '
+                    ' . $body . $html->endScript . '
                 </body>
             </html>
 ';

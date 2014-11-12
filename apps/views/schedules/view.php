@@ -3,21 +3,32 @@ $html->includeCss('calender');
 $html->includeJS('schedule');
 $html->includeJS('calender');
 $html->setTitle('Team Schedule');
-$html->setHeadLink("Calender","schedules/calender");
-$html->setHeadLink("Edit Schedule","schedules/create");
 ?>
 
 <div id="calendar" class="fc fc-ltr fc-unthemed">
     <div class="fc-toolbar">
         <div class="fc-left">
             <div class="fc-button-group">
+                <!-- <button type="button"
+                        class="fc-prev-button fc-button fc-state-default fc-corner-left">
+                        <span class="fc-icon fc-icon-left-single-arrow"></span>
+                </button>
+                <button type="button"
+                        class="fc-next-button fc-button fc-state-default fc-corner-right">
+                        Week</button>
+                <button type="button"
+                        class="fc-next-button fc-button fc-state-default fc-corner-right">
+                        <span class="fc-icon fc-icon-right-single-arrow"></span>
+                </button> -->
             </div>
-           
+            <a href="<?php echo WEBROOT; ?>schedules/create"
+               class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right ">Edit</a>
+            <a href="<?php echo WEBROOT; ?>schedules/calender"
+               class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right ">Calender</a>
         </div>
         <div class="fc-right">
             <div class="fc-button-group">
                 <?php
-                
                     foreach ($team_list as $team) {
                         echo '<a href="'.WEBROOT."schedules/view/".$team['TEAM_ID'].'" '
                                 . 'class="fc-agendaWeek-button fc-push-button fc-button fc-state-default';
@@ -26,7 +37,7 @@ $html->setHeadLink("Edit Schedule","schedules/create");
                             echo ' fc-state-active ';
                         }
                         
-                        echo      '" title="'.$team['FULL_NAME'].'">' . $team['SHORT_NAME'] . '</a>';
+                        echo      '">' . $team['NAME'] . '</a>';
                     }
                 ?>
               <!--  <button type="button"

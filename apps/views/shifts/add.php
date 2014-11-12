@@ -1,8 +1,10 @@
 <?php
 $html->includeCss('team');
 $html->setTitle('Add New Team');
-$html->setHeadLink("View Shift Structure","shifts/view/".$_SESSION['TEAM_ID']);
 ?>
+<div style="height:50px;width:99%;">
+    <a href="<?php echo WEBROOT; ?>shifts/view/<?php echo $_SESSION['TEAM_ID'] ?>" class="checkout-btn" style="width:150px;float:right;">Shift Structure</a><br/>
+</div>
 <div class="panel">
     <h2 class="panel-head">Add Shift</h2>
     <div class="panel-body">
