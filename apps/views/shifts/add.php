@@ -95,6 +95,20 @@ $html->setHeadLink("View Shift Structure","shifts/view/".$_SESSION['TEAM_ID']);
                     <td><span class="error_tooltip">Invalid format.</span></td>
                 </tr>
                 <tr>
+                    <td>No. Of Member(s)</td>                   
+                    <td>         
+                        <select class="base-input" name="max_members">
+                            <option value="0">Select</option>
+                            <option value="1">1 </option>
+                            <option value="2">2 </option>
+                            <option value="3">3 </option>
+                            <option value="4">4 </option>
+                            <option value="5">5 </option>
+                        </select>
+                    </td>
+                    <td><span class="error_tooltip">Invalid format.</span></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="Add Team" class="checkout-btn" /></td>
                     <td></td>

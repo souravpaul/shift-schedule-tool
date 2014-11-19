@@ -16,10 +16,12 @@ var calender = {
          * this.current_year=date.getFullYear();
          */
 
+        edited_date = JSON.parse(edited_date);
         this.generate();
         this.evt();
         //	$('.fc-view-container').css('visibility','visible');
         $('.fc-view-container').slideDown(1000);
+        $('.fc-today').css('background', '#80CC80');
     },
     evt: function () {
         var $this = this;
@@ -75,10 +77,15 @@ var calender = {
         var month_end_date = this.getMonthDays(current_mon.getMonth());
 
         var prev_month = null;
-        if (current_mon.getMonth() == 0)
+        var prev_month_code = 0;
+        if (current_mon.getMonth() == 0) {
             prev_month = new Date((date.getFullYear() - 1), 12, 1);
-        else
+            prev_month_code = 12;
+        }
+        else {
             prev_month = new Date(date.getFullYear(), (date.getMonth()), 1);
+            prev_month_code = date.getMonth();
+        }
         var prev_month_end_date = this.getMonthDays(prev_month.getMonth());
 
         var curent_day = (current_mon.getDay() == 0) ? 7 : current_mon.getDay();
@@ -102,13 +109,25 @@ var calender = {
                         function (i) {
                             $(this).css('background', '#fff');
                             $(this).removeClass('fc-other-month');
+                            $(this).removeClass('fc-today');
+                            $(this).removeAttr('data-edited');
                             if (count > month_end_date) {
+
                                 $(this)
                                         .html(
-                                                (count%month_end_date)
-                                                + ' ');
+                                                (count % month_end_date)
+                                                + '<input type="hidden" name="dates[]" value="" />');
+                                /* $(this)
+                                 .attr(
+                                 'data-date',
+                                 ((count % month_end_date)
+                                 + '-'
+                                 + (prev_month_code)
+                                 + '-'
+                                 + prev_month
+                                 .getFullYear() + ""));*/
                                 $(this).addClass('fc-other-month');
-                                count ++;
+                                count++;
                             } else if (i + 1 >= curent_day) {
                                 $(this)
                                         .html(
@@ -117,14 +136,14 @@ var calender = {
                                 $(this)
                                         .attr(
                                                 'data-date',
-                                                (count
+                                                ($this.format(count)
                                                         + '-'
-                                                        + (current_mon
-                                                                .getMonth() + 1)
+                                                        + $this.format(current_mon.getMonth() + 1)
                                                         + '-'
                                                         + current_mon
                                                         .getFullYear() + ""));
                                 var d = new Date();
+                                //  alert($this.format(count)+" "+ $(this).attr('data-date'));
                                 if ($(this).attr('data-date') == d.getDate()
                                         + '-' + (d.getMonth() + 1) + '-'
                                         + d.getFullYear()) {
@@ -136,12 +155,31 @@ var calender = {
                                 $(this)
                                         .html(
                                                 prev_month_start_date
-                                                + ' ');
+                                                + '<input type="hidden" name="dates[]" value="" />');
+                                $(this)
+                                        .attr(
+                                                'data-date',
+                                                ($this.format(prev_month_start_date)
+                                                        + '-'
+                                                        + $this.format(prev_month_code)
+                                                        + '-'
+                                                        + prev_month
+                                                        .getFullYear() + ""));
                                 prev_month_start_date++;
                                 $(this).addClass('fc-other-month');
                             }
                         });
+        for (i = 0; i < edited_date.length; i++) {
+            $('.fc-day[data-date="' + edited_date[i].DATE + '"]').css('background', '#FFF0B2');
+            $('.fc-day[data-date="' + edited_date[i].DATE + '"]').attr('data-edited', '1');
+            // alert('.fc-day[data-date="' + edited_date[i].DATE + '"]');
+        }
 
+    },
+    format: function (str) {
+        var pad = "00";
+        str += "";
+        return pad.substring(0, pad.length - str.length) + str;
     },
     getMonthDays: function (month) {
         var month_end_date = 31;
@@ -208,15 +246,22 @@ $(document).ready(
 
             $('.fc-day').click(
                     function () {
-                        if ($(this).find('input').val() == null
-                                || $(this).find('input').val() == "") {
-                            $(this).find('input')
-                                    .val($(this).attr('data-date'));
-                            $(this).css('background', '#B4D3F2');
-                        } else {
-                            $(this).find('input').val('');
-                            $(this).css('background', '#fff');
-                        }
+                        $('#clear-selection').click();
+                        $(this).parent().find('.fc-day').each(function (i) {
+                            if ($(this).find('input').val() == null
+                                    || $(this).find('input').val() == "") {
+                                $(this).find('input')
+                                        .val($(this).attr('data-date'));
+                                $(this).css('background', '#B4D3F2');
+                                if ($(this).attr('data-date') == $('.fc-today').attr('data-date')) {
+                                    // alert(0);
+                                    $('.fc-today').css('background', '#19A347');
+                                }
+                            } else {
+                                $(this).find('input').val('');
+                                $(this).css('background', '#fff');
+                            }
+                        });
                         // $(this).css('background','#FFD6AD');
                     });
 
@@ -226,6 +271,8 @@ $(document).ready(
                     function () {
                         $('.fc-day').find('input').val('');
                         $('.fc-day').not('.fc-today').css('background', '#fff');
+                        $('.fc-day[data-edited="1"]').css('background', '#FFF0B2');
+                        $('.fc-today').css('background', '#80CC80');
                     });
 
         });

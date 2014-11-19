@@ -11,11 +11,11 @@ class Member extends Model {
         $result = $this->query($sql);
         $account = new Account();
         $user = array(
-            'username' => $member['cmp_id'],
+            'username' => $member[DEF_ACCOUNT.'_id'],
             'password' => $member['password'],
             'team_id' => $member['team_id'],
             'admin_type' => $member['admin_type'],
-            'user_email' => $member['cmp_email'],
+            'user_email' => $member[DEF_ACCOUNT.'_email'],
             'member_id' => $this->getInsertId()
         );
         $result_acc = $account->addUser($user);

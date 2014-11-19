@@ -23,13 +23,20 @@ $html->setHeadLink("Add New Member","members/add");
         </div>
 
         <div class="member_bio">
-            <div class="block_title">
+            <div class="block_title" style="position: relative;">
                 <img src="<?php echo WEBROOT; ?>public/img/avatar.jpg"/>
                 <div style="display:inline-block;vertical-align:top;">
                     <h3 id="vname">Sourav Paul</h3>
                     <b id="vteam">Unknown Team</b><br/><br/>
                     <b id="vloc"></b>
                     <b style="color:blue;" id="vloc_type"></b>
+                </div>
+                <div class="pop-drop">
+                    <a href="#" class="pop-link">\/</a>
+                    <div class="pop-body">
+                        <a href="#" id="transfer_link">Assign New Team</a>
+                        <a id="deactivate_link">Deactivate</a>
+                    </div>
                 </div>
             </div>
             <table class="bio_table" cellspacing='0'>

@@ -4,7 +4,11 @@ $html->includeJS('schedule');
 $html->includeJS('calender');
 $html->setTitle('Daily Calender');
 $html->setHeadLink("Calender","schedules/calender");
+$edited_date_list= json_encode($edited_date_list);
 ?>
+<script>
+    var edited_date='<?php echo $edited_date_list; ?>';
+</script>
 <div id="calendar" class="fc fc-ltr fc-unthemed sf-calendar"
      style="width: 90%;">
     <div class="fc-toolbar">

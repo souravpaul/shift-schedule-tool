@@ -12,9 +12,10 @@ if (!isset($loggedin)) {
             <div id="linkList2">
                 <div id="lselect">
                     <ul>
+                        <li><a href="<?php echo WEBROOT ?>account/home">Home</a></li>
                         <li><a href="<?php echo WEBROOT ?>members/viewall">Members</a></li>
                         <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
-                        <li><a href="<?php echo WEBROOT ?>schedules/calender">Schedule</a></li>
+                        <li><a href="<?php echo WEBROOT ?>schedules/calender">Calender</a></li>
                         <li><a href="<?php echo WEBROOT ?>account/login">Login</a></li>
                     </ul>
                 </div>
@@ -46,7 +47,7 @@ if (!isset($loggedin)) {
                             <li><a href="<?php echo WEBROOT ?>members/viewall">Members</a></li>
                             <li><a href="<?php echo WEBROOT ?>shifts/view/<?php echo $_SESSION['TEAM_ID']; ?>">Shift Structure</a></li>
                             <li><a href="<?php echo WEBROOT ?>teams/viewall">Teams</a></li>
-                            <li><a href="<?php echo WEBROOT ?>schedules/calender">Schedule</a></li>
+                            <li><a href="<?php echo WEBROOT ?>schedules/calender">Calender</a></li>
                             <li><a href="<?php echo WEBROOT ?>account/logout">Logout</a></li>
                         </ul>
                     </div>

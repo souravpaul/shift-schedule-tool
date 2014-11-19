@@ -56,10 +56,42 @@ class AccountController extends Controller {
     }
 
     function home() {
-        if (!$this->authenticated) {
-            redirect('account/login');
+        // redirect("schedules/calender");
+        /*         * ******** Create Team List ************** */
+        $schedule=new Schedule;
+        $team_list=$schedule->liveMembers();
+        $live_track=array();
+        $max_mem=0;
+        if ($team_list !== false) {
+            foreach ($team_list as $team){
+                if(!isset($temp_team['TEAM_ID'])){
+                    $temp_team=array();
+                    $temp_team['TEAM_ID']=$team['TEAM_ID'];
+                    $temp_team['TEAM_NAME']=$team['FULL_NAME'];
+                    $max_mem=$team['MAX_MEM'];
+                    $temp_team['MEMBER']=array();
+                }
+                else if( $temp_team['TEAM_ID']!=$team['TEAM_ID']){
+                    
+                    array_push($live_track, $temp_team);
+                    $temp_team=array();
+                    $temp_team['TEAM_ID']=$team['TEAM_ID'];
+                    $temp_team['TEAM_NAME']=$team['FULL_NAME'];
+                    if( $max_mem<$team['MAX_MEM']){
+                         $max_mem=$team['MAX_MEM'];
+                    }
+                    $temp_team['MEMBER']=array();
+                    
+                }
+                array_push($temp_team['MEMBER'], $team['FIRST_NAME'].' '.$team['LAST_NAME'] );
+            }
+            array_push($live_track, $temp_team);
+            
+            $this->_template->set('max_mem', $max_mem);
+            $this->_template->set('live_track', $live_track);
+        } else {
+            $this->_template->status('Sorry,failed to load Team.', 0, WARNING);
         }
-        redirect("schedules/calender");
     }
 
     function isExixts($user_name) {
@@ -127,15 +159,15 @@ class AccountController extends Controller {
             $this->_template->status('Can\'t be blank.', 0, ERROR);
             return;
         }
-        $result=$this->Account->readUser($user['username']);
-        if($result!==false){
-            $user=$result[0];
-        }else{
+        $result = $this->Account->readUser($user['username']);
+        if ($result !== false) {
+            $user = $result[0];
+        } else {
             $this->_template->status('Sorry,invalid username. Please check the username.', 0, ERROR);
             return;
         }
-        
-        
+
+
         $user['password'] = substr(md5(time()), 0, 6);
 
         if ($this->Account->forget_password($user)) {
@@ -152,7 +184,7 @@ class AccountController extends Controller {
                     . "" . COMPANY . "<br/>";
 
             $this->Mail->sendMail($user["USER_EMAIL"], PROJECT . " Shift Schedule: Account Recovery", $mail, PROJECT_EMAIL, PROJECT . ' Shift Schedule');
-          
+
             $this->_template->status('New password has been sent to your mail.', 0, SUCCESS);
             redirect('account/login');
         } else {

@@ -37,4 +37,14 @@ $(document).ready(function(){
         },0);
     });
     $('.member_list li:first-child').click();
+    
+    $('#deactivate_link').click(function(){
+        alert("Coming Soon");
+        return false;
+    });
+    
+    $('#transfer_link').click(function(){
+        alert("Coming Soon");
+        return false;
+    });
 });

@@ -133,11 +133,13 @@ class MembersController extends Controller {
         }
 
         if (!$this->_validate->isNotBlank($member["pj_id"])) {
-            /* array_push($error, array(
-              'target_block' => 4,
-              'code' => ERROR,
-              'message' => 'Can\'t be blank.'
-              )); */
+            if (DEF_ACCOUNT == 'pj') {
+                array_push($error, array(
+                    'target_block' => 4,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!$this->_validate->isAlphaNumeric($member["pj_id"])) {
             array_push($error, array(
                 'target_block' => 4,
@@ -153,11 +155,13 @@ class MembersController extends Controller {
         }
 
         if (!$this->_validate->isNotBlank($member["pj_email"])) {
-            /* array_push($error, array(
-              'target_block' => 5,
-              'code' => ERROR,
-              'message' => 'Can\'t be blank.'
-              )); */
+            if (DEF_ACCOUNT == 'pj') {
+                array_push($error, array(
+                    'target_block' => 5,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!filter_var($member["pj_email"], FILTER_VALIDATE_EMAIL)) {
             array_push($error, array(
                 'target_block' => 5,
@@ -178,11 +182,13 @@ class MembersController extends Controller {
 
 
         if (!$this->_validate->isNotBlank($member["cmp_id"])) {
-            array_push($error, array(
-                'target_block' => 7,
-                'code' => ERROR,
-                'message' => 'Can\'t be blank.'
-            ));
+            if (DEF_ACCOUNT == 'cmp') {
+                array_push($error, array(
+                    'target_block' => 7,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!$this->_validate->isAlphaNumeric($member["cmp_id"])) {
             array_push($error, array(
                 'target_block' => 7,
@@ -198,11 +204,13 @@ class MembersController extends Controller {
         }
 
         if (!$this->_validate->isNotBlank($member["cmp_email"])) {
-            array_push($error, array(
-                'target_block' => 8,
-                'code' => ERROR,
-                'message' => 'Can\'t be blank.'
-            ));
+            if (DEF_ACCOUNT == 'cmp') {
+                array_push($error, array(
+                    'target_block' => 8,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!filter_var($member["cmp_email"], FILTER_VALIDATE_EMAIL)) {
             array_push($error, array(
                 'target_block' => 8,
@@ -311,7 +319,7 @@ class MembersController extends Controller {
         }
     }
 
-    public function edit($member_id=null) {
+    public function edit($member_id = null) {
         if (!$this->authenticated) {
             $this->_template->status('Please login.', 0, ERROR);
             redirect('account/login');
@@ -337,18 +345,18 @@ class MembersController extends Controller {
 
         /*         * *********** Validation ************** */
         $member = $this->getRequest(INPUT_POST);
-        $member_id=$member['member_id'];
+        $member_id = $member['member_id'];
         if ($_SESSION['ADMIN_TYPE'] == 'TEAM_MEMBER' && $member_id != $_SESSION['MEMBER_ID']) {
             redirect('members/viewall');
             return;
         }
-        
-        if($_SESSION['ADMIN_TYPE'] == 'TEAM_ADMIN'){
-            $isAdmin=true;
-        }else{
-            $isAdmin=false;
+
+        if ($_SESSION['ADMIN_TYPE'] == 'TEAM_ADMIN') {
+            $isAdmin = true;
+        } else {
+            $isAdmin = false;
         }
-        
+
         $error = array();
         if (!$this->_validate->isNotBlank($member["fname"])) {
             array_push($error, array(
@@ -389,11 +397,13 @@ class MembersController extends Controller {
         }
 
         if (!$this->_validate->isNotBlank($member["pj_id"])) {
-            /* array_push($error, array(
-              'target_block' => 4,
-              'code' => ERROR,
-              'message' => 'Can\'t be blank.'
-              )); */
+            if (DEF_ACCOUNT == 'pj') {
+                array_push($error, array(
+                    'target_block' => 4,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!$this->_validate->isAlphaNumeric($member["pj_id"])) {
             array_push($error, array(
                 'target_block' => 4,
@@ -409,11 +419,13 @@ class MembersController extends Controller {
         }
 
         if (!$this->_validate->isNotBlank($member["pj_email"])) {
-            /* array_push($error, array(
-              'target_block' => 5,
-              'code' => ERROR,
-              'message' => 'Can\'t be blank.'
-              )); */
+            if (DEF_ACCOUNT == 'pj') {
+                array_push($error, array(
+                    'target_block' => 5,
+                    'code' => ERROR,
+                    'message' => 'Can\'t be blank.'
+                ));
+            }
         } else if (!filter_var($member["pj_email"], FILTER_VALIDATE_EMAIL)) {
             array_push($error, array(
                 'target_block' => 5,
@@ -434,11 +446,13 @@ class MembersController extends Controller {
 
         if ($_SESSION['ADMIN_TYPE'] == 'TEAM_ADMIN') {
             if (!$this->_validate->isNotBlank($member["cmp_id"])) {
-                array_push($error, array(
-                    'target_block' => 7,
-                    'code' => ERROR,
-                    'message' => 'Can\'t be blank.'
-                ));
+                if (DEF_ACCOUNT == 'cmp') {
+                    array_push($error, array(
+                        'target_block' => 7,
+                        'code' => ERROR,
+                        'message' => 'Can\'t be blank.'
+                    ));
+                }
             } else if (!$this->_validate->isAlphaNumeric($member["cmp_id"])) {
                 array_push($error, array(
                     'target_block' => 7,
@@ -454,11 +468,13 @@ class MembersController extends Controller {
             }
 
             if (!$this->_validate->isNotBlank($member["cmp_email"])) {
-                array_push($error, array(
-                    'target_block' => 8,
-                    'code' => ERROR,
-                    'message' => 'Can\'t be blank.'
-                ));
+                if (DEF_ACCOUNT == 'cmp') {
+                    array_push($error, array(
+                        'target_block' => 8,
+                        'code' => ERROR,
+                        'message' => 'Can\'t be blank.'
+                    ));
+                }
             } else if (!filter_var($member["cmp_email"], FILTER_VALIDATE_EMAIL)) {
                 array_push($error, array(
                     'target_block' => 8,
@@ -533,7 +549,7 @@ class MembersController extends Controller {
             return;
         }
 
-        if ($this->Member->update($member,$isAdmin)) {
+        if ($this->Member->update($member, $isAdmin)) {
             $mail = "Hi " . $member['fname'] . ",<br/><br/>"
                     . "Your account has been updated successfully.Thank You."
                     . "<br/><br/><br/>"
@@ -545,7 +561,7 @@ class MembersController extends Controller {
             $this->Mail->sendMail($member["cmp_email"], "Welcome to " . PROJECT . " Shift Schedule", $mail, PROJECT_EMAIL, PROJECT . ' Shift Schedule');
 
             $this->_template->status('The members has been added successfully.', 0, SUCCESS);
-            redirect('members/edit/'.$member_id);
+            redirect('members/edit/' . $member_id);
         } else {
             $this->_template->status('Sorry,server problem.Please try again soon.', 0, ERROR);
         }

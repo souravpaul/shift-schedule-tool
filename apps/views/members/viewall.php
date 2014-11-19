@@ -2,7 +2,7 @@
 $html->includeCss('member');
 $html->setTitle("Member List");
 $html->includeJS('member');
-$html->setHeadLink("Add New Member","members/add");
+$html->setHeadLink("Add New Member", "members/add");
 ?>
 
 
@@ -23,13 +23,21 @@ $html->setHeadLink("Add New Member","members/add");
         </div>
 
         <div class="member_bio">
-            <div class="block_title">
+            <div class="block_title" style="position:relative;">
                 <img src="<?php echo WEBROOT; ?>public/img/avatar.jpg"/>
                 <div style="display:inline-block;vertical-align:top;">
-                    <h3 id="vname">Sourav Paul</h3>
+                    <h3 id="vname">Unknown</h3>
                     <b id="vteam">Unknown Team</b><b> Team</b><br/><br/>
                     <b id="vloc"></b>
                     <b style="color:blue;" id="vloc_type"></b>
+
+                </div>
+                <div class="pop-drop">
+                    <a href="#" class="pop-link">\/</a>
+                    <div class="pop-body">
+                        <a href="#" id="transfer_link">Assign New Team</a>
+                        <a id="deactivate_link">Deactivate</a>
+                    </div>
                 </div>
             </div>
             <table class="bio_table" cellspacing='0'>
@@ -74,8 +82,8 @@ $html->setHeadLink("Add New Member","members/add");
     <?php
     foreach ($team_list as $team) {
         echo "<li data-member=" . htmlspecialchars(json_encode($team), ENT_QUOTES) . ">"
-                . "<a href='".WEBROOT."members/view/".$team['TEAM_ID']."' title='".$team['FULL_NAME']."' >" . $team['SHORT_NAME'] . '</a>'
-                . '</li>';
+        . "<a href='" . WEBROOT . "members/view/" . $team['TEAM_ID'] . "' title='" . $team['FULL_NAME'] . "' >" . $team['SHORT_NAME'] . '</a>'
+        . '</li>';
     }
     ?>
 </ul>

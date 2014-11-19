@@ -2,8 +2,9 @@
 $html->includeCss('calender');
 $html->includeJS('schedule');
 $html->setTitle('Create Schedule');
-$html->setHeadLink("Calender","schedules/calender");
-$html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
+$html->setHeadLink("Calender", "schedules/calender");
+$html->setHeadLink("Check Schedule", "schedules/view/" . $_SESSION['TEAM_ID']);
+$html->setHeadLink("Clear Schedule", "schedules/clear");
 ?>
 
 <div id="calendar" class="fc fc-ltr fc-unthemed">
@@ -26,6 +27,7 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
                class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right "
                onclick="$('#schedule_create_form').submit();
                        return false;">Save</a>
+           
             <a href="<?php echo WEBROOT; ?>schedules/calender"
                class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right ">Cancel</a>
         </div>
@@ -38,19 +40,21 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
             </div>
         </div>
         <div class="fc-center">
-            <h2>Create <?php  echo ' '.((isset($current_team_name))?$current_team_name:'').' Team'; ?>Schedule</h2>
+            <h2>Create <?php echo ' ' . ((isset($current_team_name)) ? $current_team_name : '') . ' Team'; ?>Schedule</h2>
         </div>
         <div class="fc-clear"></div>
     </div>
     <?php
     $member_list_html = "";
     foreach ($member_list as $member) {
-        $member_list_html.= '<li><a href="#" data-member=\'' . json_encode($member) . '\'>' . $member['FIRST_NAME'] . ' ' . $member['FIRST_NAME'] . '</a></li>';
+        $member_list_html.= '<li><a href="#" data-member=\'' . json_encode($member) . '\' data-id="'. $member['MEM_ID'].'">' . $member['FIRST_NAME'] . ' ' . $member['LAST_NAME'] . '</a></li>';
     }
     ?>
     <form method="post" action="<?php echo WEBROOT ?>schedules/add" id="schedule_create_form">
         <div class="fc-view-container" style="">
-            <div class="fc-view fc-month-view fc-basic-view">
+            <?php
+            for ($shift_i = 0; $shift_i < sizeof($formats); $shift_i++) {
+                ?>
                 <table>
                     <thead>
                         <tr>
@@ -59,18 +63,15 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
                                     <table class="sc-names">
                                         <thead>
                                             <tr>
-                                                <th class="fc-day-header">Week Days</th>
+                                                <th class="fc-day-header">Shift</th>
                                                 <?php
-                                                $weekday_shift_list = array();
-                                                foreach ($shift_list as $shift) {
-                                                    if (strtoupper($shift['SHIFT_DAYS']) != 'WEEKEND') {
-                                                        array_push($weekday_shift_list, $shift);
-                                                        echo '<th class="fc-day-header">'
-                                                        . date('g A', ($shift['START_TIME']))
-                                                        . '- '
-                                                        . date('g A', ($shift['END_TIME']))
-                                                        . '</th>';
-                                                    }
+                                                foreach ($formats[$shift_i] as $struct) {
+
+                                                    echo '<th class="fc-day-header">'
+                                                    . $struct['start']
+                                                    . '- '
+                                                    . $struct['end']
+                                                    . '</th>';
                                                 }
                                                 ?>
                                             </tr>
@@ -84,9 +85,10 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
                             <td class="fc-widget-content"><div
                                     class="fc-day-grid-container">
                                     <div class="fc-day-grid">
-
                                         <?php
-                                        foreach ($weekday_dates as $date) {
+                                        $date_count=0;
+                                        foreach ($schedule_list[$shift_i] as $key => $value) {
+                                            $date_count++;
                                             ?>
                                             <div class="fc-row" style="border-bottom: solid 1px gray;">
                                                 <div class="fc-bg">
@@ -94,89 +96,97 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
                                                         <tbody>
                                                             <tr>
                                                                 <?php
-                                                                for ($i = 0; $i <= sizeof($weekday_shift_list); $i++) {
+                                                                $shift_id_list = array();
+                                                                 echo '<td class="fc-day "></td>';
+                                                                for ($i = 0; $i < sizeof($formats[$shift_i]); $i++) {
                                                                     echo '<td class="fc-day "></td>';
+                                                                    array_push($shift_id_list, $formats[$shift_i][$i]['id']);
                                                                 }
                                                                 ?>
+                                                      <!--      <td cla-->
+
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="fc-content-skeleton">
-
                                                     <table class="sc-names">
                                                         <tbody>
-                                                            <tr>
-                                                                <td><?php echo date('d', strtotime($date)); ?></td>
+                                                            <?php
+                                                            for ($mem = 1; $mem <= $value['max_mem']; $mem++) {
+                                                                ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <?php
+                                                                        switch ($mem) {
+                                                                            case floor($value['max_mem'] / 2 ): echo date('d', strtotime($key));
+                                                                                break;
+                                                                            case floor($value['max_mem'] / 2 + 1) : echo date('M', strtotime($key));
+                                                                                break;
+                                                                            case 1: echo date('d,M', strtotime($key));
+                                                                                break;
+                                                                            default: echo '';
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+
+                                                                    <?php
+                                                                    $xcount = $mem % 2;$count=0;
+                                                                    foreach ($value['shift'] as $items) {
+                                                                        if ($items['RANK'] == $mem) {
+                                                                            $shift_pos = array_search($items['SHIFT_ID'], $shift_id_list);
+                                                                            if ($count != $shift_pos) {
+                                                                               //  echo '<br/>' . $mem . '   ' . $shift_pos . ' >< ' . $count;
+                                                                                for ($temp_count = $count; $temp_count < $shift_pos; $temp_count++) {
+                                                                                    echo '<td><a href="#" class="samp' . ($xcount % 2) . '"> NA </a></td>';
+
+                                                                                    $xcount++;
+                                                                                     $count++;
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                            <td>
+                                                                                <div class="container samp<?php echo ($xcount % 2); ?>">
+                                                                                    <ul>
+                                                                                        <li class="dropdown ">
+                                                                                            <a href="#" data-toggle="dropdown" class="data-select">
+                                                                                                <?php
+                                                                                                $temp_date = date('d-m-Y', strtotime($key));
+                                                                                                echo (($items['FIRST_NAME']) ? $items['FIRST_NAME'] : '----')
+                                                                                                . ' '
+                                                                                                . (($items['LAST_NAME']) ? $items['LAST_NAME'] : '-')
+                                                                                                ?>
+                                                                                                <i class="icon-arrow"></i>
+                                                                                            </a>
+                                                                                            <ul class="dropdown-menu" data-row="<?php echo ($date_count+1);  ?>" data-id="<?php echo ($mem%($value['max_mem']+1)).$count; ?>">
+                    <?php echo $member_list_html; ?>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <input type="hidden" class="shift_input" 
+                                                                                       name="schedule['<?php echo date('d-m-Y', strtotime($key)); ?>']['<?php echo $items['STRUCT_ID']; ?>']['<?php echo $mem; ?>']" 
+                                                                                       value="<?php echo (($items['MEM_ID']) ? $items['MEM_ID'] : '0') ?>" />
+                                                                            </td>
+                                                                            <?php
+                                                                            $xcount++;
+                                                                            $count++;
+                                                                        }
+                                                                    }
+
+                                                                    for ($inc = $xcount; $inc < sizeof($formats[$shift_i]) + ($mem % 2); $inc++) {
+                                                                        echo '<td><a href="#" class="samp' . ($xcount % 2) . '"> NA </a></td>';
+                                                                        $xcount++;
+                                                                    }
+                                                                    ?>
+
+
+
+                                                                </tr>
 
                                                                 <?php
-                                                                $xcount = 0;
-                                                                foreach ($weekday_shift_list as $shift) {
-                                                                    ?>
-                                                                    <td>
-                                                                        <div class="container samp<?php echo ($xcount % 2); ?>">
-                                                                            <ul>
-                                                                                <li class="dropdown ">
-                                                                                    <a href="#" data-toggle="dropdown" class="data-select">
-                                                                                        <?php
-                                                                                        $temp_date=date('d-m-Y', strtotime($date));
-                                                                                        echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['FIRST_NAME'] : '-------------------------------')
-                                                                                        . ' '
-                                                                                        . ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['LAST_NAME'] : '');
-                                                                                        
-                                                                                        ?>
-                                                                                        <i class="icon-arrow"></i>
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu">
-                                                                                        <?php echo $member_list_html; ?>
-                                                                                    </ul>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <input type="hidden" class="shift_input" 
-                                                                               name="schedule['<?php echo date('d-m-Y', strtotime($date)); ?>']['<?php echo $shift['STRUCT_ID']; ?>']['1']" 
-                                                                               value="<?php echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['MEMBER_ID'] : '') ?>" />
-                                                                    </td>
-                                                                    <?php
-                                                                    $xcount++;
-                                                                }
-                                                                ?>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><?php echo date('M, o', strtotime($date)); ?></td>
-                                                                <?php
-                                                                foreach ($weekday_shift_list as $shift) {
-                                                                    ?>
-                                                                    <td>
-                                                                        <div class="container samp<?php echo ($xcount % 2); ?>">
-                                                                            <ul>
-                                                                                <li class="dropdown ">
-                                                                                    <a href="#" data-toggle="dropdown" class="data-select">
-                                                                                        <?php
-                                                                                        $temp_date=date('d-m-Y', strtotime($date));
-                                                                                        echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['FIRST_NAME'] : '-------------------------------')
-                                                                                        . ' '
-                                                                                        . ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['LAST_NAME'] : '');
-                                                                                        
-                                                                                        ?>
-                                                                                        <i class="icon-arrow"></i>
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu">
-                                                                                        <?php echo $member_list_html; ?>
-                                                                                    </ul>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div> 
-                                                                        <input type="hidden" class="shift_input" 
-                                                                               name="schedule['<?php echo date('d-m-Y', strtotime($date)); ?>']['<?php echo $shift['STRUCT_ID']; ?>']['2']" 
-                                                                               value="<?php echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['MEMBER_ID'] : '') ?>" />
-       
-                                                                    </td>
-                                                                    <?php
-                                                                    $xcount++;
-                                                                }
-                                                                ?>
-                                                            </tr>
+                                                            }
+                                                            ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -189,154 +199,11 @@ $html->setHeadLink("Check Schedule","schedules/view/".$_SESSION['TEAM_ID']);
                                 </div></td>
                         </tr>
                     </tbody>
-                </table>
-            </div>
+
+                </table><br/><br/>
+                <?php
+            }
+            ?>
         </div>
-
-        <div class="fc-view-container" style="">
-            <div class="fc-view fc-month-view fc-basic-view">
-                <table>
-                    <thead>
-                        <tr>
-                            <td class="fc-widget-header"><div
-                                    class="fc-row fc-widget-header">
-                                    <table class="sc-names">
-                                        <thead>
-                                            <tr>
-                                                <th class="fc-day-header">Weekend</th>
-
-                                                <?php
-                                                $weekend_shift_list = array();
-                                                foreach ($shift_list as $shift) {
-                                                    if (strtoupper($shift['SHIFT_DAYS']) != 'WEEKDAY') {
-                                                        array_push($weekend_shift_list, $shift);
-                                                        echo '<th class="fc-day-header">'
-                                                        . date('g A', ($shift['START_TIME']))
-                                                        . '- '
-                                                        . date('g A', ($shift['END_TIME']))
-                                                        . '</th>';
-                                                    }
-                                                }
-                                                ?>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>     
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="fc-widget-content"><div
-                                    class="fc-day-grid-container">
-                                    <div class="fc-day-grid">
-
-                                        <?php
-                                        foreach ($weekend_dates as $date) {
-                                            ?>
-
-
-                                            <div class="fc-row" style="border-bottom: solid 1px gray;">
-                                                <div class="fc-bg">
-                                                    <table class="sc-names">
-                                                        <tbody>
-                                                            <tr>
-                                                                <?php
-                                                                for ($i = 0; $i <= sizeof($weekend_shift_list); $i++) {
-                                                                    echo '<td class="fc-day "></td>';
-                                                                }
-                                                                ?>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="fc-content-skeleton">
-
-                                                    <table class="sc-names">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td><?php echo date('d', strtotime($date)); ?></td>
-                                                                <?php
-                                                                $xcount = 1;
-                                                                foreach ($weekend_shift_list as $shift) {
-                                                                    ?>
-                                                                    <td>
-                                                                        <div class="container samp<?php echo ($xcount % 2); ?>">
-                                                                            <ul>
-                                                                                <li class="dropdown ">
-                                                                                    <a href="#" data-toggle="dropdown" class="data-select">
-                                                                                        <?php
-                                                                                        $temp_date=date('d-m-Y', strtotime($date));
-                                                                                        echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['FIRST_NAME'] : '-------------------------------')
-                                                                                        . ' '
-                                                                                        . ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['LAST_NAME'] : '');
-                                                                                        
-                                                                                        ?>
-                                                                                        <i class="icon-arrow"></i>
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu">
-                                                                                        <?php echo $member_list_html; ?>
-                                                                                    </ul>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <input type="hidden" class="shift_input" 
-                                                                               name="schedule['<?php echo date('d-m-Y', strtotime($date)); ?>']['<?php echo $shift['STRUCT_ID']; ?>']['1']" 
-                                                                               value="<?php echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][1]['MEMBER_ID'] : '') ?>" />
-                                                                    </td>
-                                                                    <?php
-                                                                    $xcount++;
-                                                                }
-                                                                ?>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><?php echo date('M, o', strtotime($date)); ?></td>
-                                                                <?php
-                                                                foreach ($weekend_shift_list as $shift) {
-                                                                    ?>
-                                                                    <td>
-                                                                        <div class="container samp<?php echo ($xcount % 2); ?>">
-                                                                            <ul>
-                                                                                <li class="dropdown ">
-                                                                                    <a href="#" data-toggle="dropdown" class="data-select">
-                                                                                        <?php
-                                                                                        $temp_date=date('d-m-Y', strtotime($date));
-                                                                                        echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['FIRST_NAME'] : '-------------------------------')
-                                                                                        . ' '
-                                                                                        . ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['LAST_NAME'] : '');
-                                                                                        
-                                                                                        ?>
-                                                                                        <i class="icon-arrow"></i>
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu">
-                                                                                        <?php echo $member_list_html; ?>
-                                                                                    </ul>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div> 
-                                                                        <input type="hidden" class="shift_input" 
-                                                                               name="schedule['<?php echo date('d-m-Y', strtotime($date)); ?>']['<?php echo $shift['STRUCT_ID']; ?>']['2']" 
-                                                                               value="<?php echo ((isset($schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2])) ? $schedule_list["'" . $temp_date . "'"][$shift['STRUCT_ID']][2]['MEMBER_ID'] : '') ?>" />
-                                                                    </td>
-                                                                    <?php
-                                                                    $xcount++;
-                                                                }
-                                                                ?>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <?php
-                                        }
-                                        ?>
-
-
-                                        </td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                </form>
-                                </div>
+    </form>
+</div>

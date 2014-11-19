@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2014 at 07:24 AM
+-- Generation Time: Nov 19, 2014 at 06:11 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `SCHEDULE` (
   `TEAM_ID` int(11) NOT NULL,
   `RANK` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`SCH_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=229 ;
 
 -- --------------------------------------------------------
 
@@ -112,9 +112,10 @@ CREATE TABLE IF NOT EXISTS `SHIFT_STRUCTURE` (
   `SHIFT_TYPE` varchar(10) NOT NULL,
   `SHIFT_DAYS` varchar(11) NOT NULL,
   `TEAM_ID` int(5) NOT NULL,
+  `MAX_MEM` int(11) NOT NULL DEFAULT '1',
   `ACTIVE` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`STRUCT_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 

@@ -613,9 +613,9 @@ a.fc-more:hover {
 .fc-view-container *,
 .fc-view-container *:before,
 .fc-view-container *:after {
-	-webkit-box-sizing: content-box;
+	/*-webkit-box-sizing: content-box;
 	   -moz-box-sizing: content-box;
-	        box-sizing: content-box;
+	        box-sizing: content-box;*/
 }
 
 .fc-view, /* scope positioning and z-index's for everything within the view */
@@ -981,9 +981,15 @@ be a descendant of the grid when it is being dragged.
 	background:#FFFFFF;
 /*	border-bottom:solid 1px gray;*/
 }
+.fc table .sc-names tr .samp1,.fc table .sc-names tr:last-child .samp0  {
+	border-bottom:solid 0px gray;
+}
+.fc table .sc-names tr:last-child .samp1,.fc table .sc-names tr:last-child .samp0  {
+	border-bottom:solid 1px black ;
+}
 
-.fc table .sc-names tr:FIRST-CHILD .samp1,.fc table .sc-names tr:FIRST-CHILD .samp0  {
-	border-bottom:solid 1px gray;
+.fc table .sc-names tr td,.fc table .sc-names tr td {
+    border-bottom:solid 1px gray;
 }
 
 .sf-calendar .fc-day:hover{
@@ -995,4 +1001,7 @@ be a descendant of the grid when it is being dragged.
 
 .sc-names tr td{
 	background:gray;
+}
+.fc-day-header{
+    color:white;
 }

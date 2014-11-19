@@ -74,12 +74,33 @@ class ShiftsController extends Controller{
             ));
         }
         
+        if (!$this->_validate->isNotBlank($shift["max_members"])) {
+            array_push($error, array(
+                'target_block' => 5,
+                'code' => ERROR,
+                'message' => 'Please select ending time'
+            ));
+        }else if (!is_numeric ($shift["max_members"])) {
+            array_push($error, array(
+                'target_block' => 5,
+                'code' => ERROR,
+                'message' => 'Invalid selection.'
+            ));
+        }else if ($shift["max_members"]>5 || $shift["max_members"]<1) {
+            array_push($error, array(
+                'target_block' => 5,
+                'code' => ERROR,
+                'message' => 'Please select a number between 1 to 5'
+            ));
+        }
+        
         if (sizeof($error) > 0) {
             $this->_template->status('Please fill the form properly', 0, ERROR, $error);
             return;
         }
         $shift['team_id']=$_SESSION['TEAM_ID'];
-        print_r($shift);
+       // print_r($shift);
+      //  die();
         if ($this->Shift->add($shift)) {
             $this->_template->status('New shift structure has been added successfully.', 0, SUCCESS);
             redirect('shifts/view/'.$shift['team_id']);
