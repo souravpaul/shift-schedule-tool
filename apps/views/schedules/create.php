@@ -32,11 +32,13 @@ $html->setHeadLink("Clear Schedule", "schedules/clear");
                class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right ">Cancel</a>
         </div>
         <div class="fc-right">
+            <p style="margin:0px;margin-top:5px;font-weight:bold;">Auto Downfill</p>
             <div class="fc-button-group">
                 <button type="button"
-                        class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active fc-push-button">On</button>
+                        class="fc-month-button fc-button fc-state-default fc-corner-left fc-push-button autofill" data-state="ON">On</button>
                 <button type="button"
-                        class="fc-agendaWeek-button fc-button fc-state-default fc-push-button">Off</button>
+                        class="fc-agendaWeek-button fc-button fc-state-default fc-state-active fc-push-button autofill" data-state="OFF">Off</button>
+                <input type="hidden" id="autodownfill" value="OFF"/>
             </div>
         </div>
         <div class="fc-center">

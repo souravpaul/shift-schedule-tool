@@ -17,8 +17,9 @@ $html->setHeadLink("Calender","schedules/calender");
     <div class="panel-body">
     <?php
     for ($i=0;$i<$max_mem;$i++){
-        echo '<div class="team_sub_box">
+        echo '<div class="team_sub_box" style="text-align:left;">
             '.((isset($team['MEMBER'][$i]) && strlen($team['MEMBER'][$i])>2)?$team['MEMBER'][$i]:'-').'
+            <b style="float:right;">Live</b>
         </div>';
     }
     ?>

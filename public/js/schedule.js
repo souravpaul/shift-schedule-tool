@@ -14,17 +14,19 @@ $(document).ready(function () {
         $(this).parent().parent().parent().find('.data-select').text(obj.FIRST_NAME + ' ' + obj.LAST_NAME);
         $(this).parent().parent().parent().parent().parent().parent().find('.shift_input').val(obj.MEM_ID);
         $(this).parent().parent().parent().find('a[data-toggle="dropdown"]').click();
-        var cur_row = $(this).parent().parent().data('row');
-        $('.dropdown-menu[data-id="' + $(this).parent().parent().data('id') + '"] a[data-id="' + $(this).data('id') + '"]').each(function (i) {
+        if ($('#autodownfill').val() === "ON") {
+            var cur_row = $(this).parent().parent().data('row');
+            $('.dropdown-menu[data-id="' + $(this).parent().parent().data('id') + '"] a[data-id="' + $(this).data('id') + '"]').each(function (i) {
 
-            if ($(this).parent().parent().data('row') > cur_row) {
-                var obj = JSON.parse($(this).attr('data-member'));
-                $(this).parent().parent().parent().find('.data-select').text(obj.FIRST_NAME + ' ' + obj.LAST_NAME);
-                $(this).parent().parent().parent().parent().parent().parent().find('.shift_input').val(obj.MEM_ID);
-            }
-            //$(this).parent().parent().parent().find('a[data-toggle="dropdown"]').click();
-            //return false;
-        });
+                if ($(this).parent().parent().data('row') > cur_row) {
+                    var obj = JSON.parse($(this).attr('data-member'));
+                    $(this).parent().parent().parent().find('.data-select').text(obj.FIRST_NAME + ' ' + obj.LAST_NAME);
+                    $(this).parent().parent().parent().parent().parent().parent().find('.shift_input').val(obj.MEM_ID);
+                }
+                //$(this).parent().parent().parent().find('a[data-toggle="dropdown"]').click();
+                //return false;
+            });
+        }
 
         return false;
     });
@@ -45,4 +47,11 @@ $(document).ready(function () {
         }
         return false;
     });
+
+    $('.autofill').click(function () {
+        $('.autofill').removeClass('fc-state-active');
+        $(this).addClass('fc-state-active');
+        $('#autodownfill').val($(this).data('state'));
+    });
+
 });
